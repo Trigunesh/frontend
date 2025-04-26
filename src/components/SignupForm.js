@@ -1,140 +1,83 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // import navigate
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function SignupForm() {
-  const navigate = useNavigate(); // initialize navigate
-  const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
-  const [genre, setGenre] = useState('');
-  const [experience, setExperience] = useState('');
-  const [address, setAddress] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+const SignUp = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    location: '',
+    genre: '',
+    experience: '',
+    address: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',  // Added confirmPassword field
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
+    // Basic validation for email and password
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      toast.error('Please enter a valid email');
       return;
     }
 
-    // Send signup request
+    if (formData.password.length < 6) {
+      toast.error('Password should be at least 6 characters long');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:5000/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          location,
-          genre,
-          experience,
-          address,
-          email,
-          phone,
-          password,
-          confirmPassword,
-        }),
+        body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
-      if (data.success) {
-        // Redirect to login page upon successful signup
+      const result = await response.json();
+      if (result.success) {
+        toast.success('Registration successful');
         navigate('/login');
       } else {
-        setError(data.message || 'Signup failed');
+        toast.error(result.message || 'Error during registration');
       }
-    } catch (error) {
-      setError('An error occurred during signup. Please try again.');
+    } catch (err) {
+      toast.error('Error: ' + err.message);
     }
   };
 
   return (
-    <div className="form-container">
-      <h2>Sign Up</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label>Name:</label>
-        <input 
-          type="text" 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
-          required 
-        />
-        
-        <label>Location:</label>
-        <input 
-          type="text" 
-          value={location} 
-          onChange={(e) => setLocation(e.target.value)} 
-          required 
-        />
-
-        <label>Genre:</label>
-        <input 
-          type="text" 
-          value={genre} 
-          onChange={(e) => setGenre(e.target.value)} 
-          required 
-        />
-
-        <label>Experience:</label>
-        <input 
-          type="number" 
-          value={experience} 
-          onChange={(e) => setExperience(e.target.value)} 
-          required 
-        />
-
-        <label>Address:</label>
-        <input 
-          type="text" 
-          value={address} 
-          onChange={(e) => setAddress(e.target.value)} 
-          required 
-        />
-
-        <label>Email:</label>
-        <input 
-          type="email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          required 
-        />
-
-        <label>Phone Number:</label>
-        <input 
-          type="text" 
-          value={phone} 
-          onChange={(e) => setPhone(e.target.value)} 
-          required 
-        />
-
-        <label>Password:</label>
-        <input 
-          type="password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          required 
-        />
-
-        <label>Confirm Password:</label>
-        <input 
-          type="password" 
-          value={confirmPassword} 
-          onChange={(e) => setConfirmPassword(e.target.value)} 
-          required 
-        />
-
+        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
+        <input type="text" name="location" placeholder="Location" value={formData.location} onChange={handleChange} required />
+        <input type="text" name="genre" placeholder="Genre" value={formData.genre} onChange={handleChange} required />
+        <input type="number" name="experience" placeholder="Experience (years)" value={formData.experience} onChange={handleChange} required />
+        <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required />
+        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+        <input type="text" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required />
+        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+        <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} required />
         <button type="submit">Sign Up</button>
       </form>
     </div>
   );
-}
+};
 
-export default SignupForm;
+export default SignUp;

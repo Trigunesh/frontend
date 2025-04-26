@@ -1,14 +1,23 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-  const location = useLocation();
-  const user = location.state;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+  const goToCardList = () => {
+    navigate('/cards');
+  };
 
   return (
-    <div className="home">
-      <h1>Welcome, {user?.name || 'Guest'}!</h1>
-      <p>This is your homepage.</p>
+    <div>
+      <h1>Welcome to your homepage!</h1>
+      <button onClick={goToCardList}>View Cards</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

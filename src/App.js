@@ -1,36 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginForm from './components/LoginForm';
-import SignupForm from './components/SignupForm';
+import SignUp from './components/SignupForm';
+import Login from './components/LoginForm';
 import HomePage from './components/HomePage';
-import './styles.css';
-
-function App() {
-  const [showLogin, setShowLogin] = useState(true);
-
+import CardList from './components/CardList';
+import { ToastContainer } from 'react-toastify';
+const App = () => {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div className="container">
-              <div className="auth-box">
-                <div className="toggle-buttons">
-                  <button className={showLogin ? 'active' : ''} onClick={() => setShowLogin(true)}>Login</button>
-                  <button className={!showLogin ? 'active' : ''} onClick={() => setShowLogin(false)}>Sign Up</button>
-                </div>
-                {showLogin ? <LoginForm /> : <SignupForm />}
-              </div>
-            </div>
-          }
-        />
-        {/* Ensure this route is defined to show the login form */}
-        <Route path="/login" element={<LoginForm />} />
+        {/* Routes for Login and Signup */}
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* Routes for Home and Cards */}
         <Route path="/home" element={<HomePage />} />
+        <Route path="/cards" element={<CardList />} />
       </Routes>
+      <ToastContainer />
     </Router>
   );
-}
+};
 
 export default App;
