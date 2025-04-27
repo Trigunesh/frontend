@@ -1,26 +1,62 @@
-import React from 'react';
+// App.js
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import SignUp from './components/SignupForm';
 import Login from './components/LoginForm';
-import HomePage from './components/HomePage';
+import SignUp from './components/SignupForm';
 import CardList from './components/CardList';
-import { ToastContainer } from 'react-toastify';
-const App = () => {
+import HomePage from './components/HomePage';
+import Navbar from './components/Navbar';
+import AboutPage from './components/AboutPage'; // Import AboutPage
+
+const dummyCards = [
+  {
+    name: "John Doe",
+    genre: "Rock",
+    place: "New York",
+    photo: "https://via.placeholder.com/150",
+  },
+  {
+    name: "Jane Smith",
+    genre: "Jazz",
+    place: "Los Angeles",
+    photo: "https://via.placeholder.com/150",
+  },
+  // more cards...
+];
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check login status when App first loads
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem('isLoggedIn');
+    if (loggedInStatus === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    localStorage.setItem('isLoggedIn', 'true');
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+  };
+
   return (
     <Router>
+      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <Routes>
-        {/* Routes for Login and Signup */}
-        <Route path="/" element={<Login />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/home" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-
-        {/* Routes for Home and Cards */}
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/cards" element={<CardList />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
-      <ToastContainer />
     </Router>
   );
-};
+}
 
 export default App;
