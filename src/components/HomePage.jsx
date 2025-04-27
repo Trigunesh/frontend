@@ -1,5 +1,3 @@
-import React from 'react';
-
 const HomePage = () => {
   return (
     <div style={styles.page}>
@@ -23,24 +21,37 @@ const HomePage = () => {
       {/* Fairness Section */}
       <div style={styles.fairnessSection}>
         <h3>Fairness built into every click</h3>
+        <img src="https://via.placeholder.com/400x250" alt="Fairness" style={styles.image} />
         <p>
           From plagiarism detection and proctoring to minimizing bias, our assessments give developers everywhere an equal shot at today's top tech opportunities.
         </p>
 
-        <h4>World-class plagiarism monitoring</h4>
-        <p>
-          Advanced machine learning monitors for plagiarism, test-taker integrity, and question leaks, giving all developers a fairer shot at the next round.
-        </p>
+        {/* World-class plagiarism monitoring */}
+        <div style={styles.item}>
+          <img src="https://via.placeholder.com/200" alt="Plagiarism Monitoring" style={styles.iconImage} />
+          <h4>World-class plagiarism monitoring</h4>
+          <p>
+            Advanced machine learning monitors for plagiarism, test-taker integrity, and question leaks, giving all developers a fairer shot at the next round.
+          </p>
+        </div>
 
-        <h4>A standardized skills approach</h4>
-        <p>
-          Structured assessment content and a scalable system make sure you test applicants consistently, whether you're hiring one dev or 1,000.
-        </p>
+        {/* A standardized skills approach */}
+        <div style={styles.item}>
+          <img src="https://via.placeholder.com/200" alt="Standardized Skills" style={styles.iconImage} />
+          <h4>A standardized skills approach</h4>
+          <p>
+            Structured assessment content and a scalable system make sure you test applicants consistently, whether you're hiring one dev or 1,000.
+          </p>
+        </div>
 
-        <h4>Fair, valid, and reliable results</h4>
-        <p>
-          From adverse-impact studies to sensitivity reviews, our content undergoes expert-led analysis to help you test the skills that matter most.
-        </p>
+        {/* Fair, valid, and reliable results */}
+        <div style={styles.item}>
+          <img src="https://via.placeholder.com/200" alt="Reliable Results" style={styles.iconImage} />
+          <h4>Fair, valid, and reliable results</h4>
+          <p>
+            From adverse-impact studies to sensitivity reviews, our content undergoes expert-led analysis to help you test the skills that matter most.
+          </p>
+        </div>
       </div>
 
       {/* New section - Candidates tackle real coding challenges */}
@@ -50,20 +61,35 @@ const HomePage = () => {
           The best way to assess a developer's skills is by reviewing their code. Instead of manually reviewing resumes, automate screening and let developers showcase their technical skills in familiar coding environments. Reduce time spent in technical interviews by filtering out unqualified candidates early.
         </p>
 
-        <h4>Identify strong candidates quickly</h4>
-        <p>
-          Automating the screening process allows you to quickly identify qualified candidates. By letting developers demonstrate their skills in coding challenges, you can reduce technical interview time and focus only on the most qualified applicants.
-        </p>
+        <div style={styles.candidateItem}>
+          <img src="https://via.placeholder.com/150" alt="Strong Candidates" style={styles.candidateImage} />
+          <div style={styles.textContent}>
+            <h4>Identify strong candidates quickly</h4>
+            <p>
+              Automating the screening process allows you to quickly identify qualified candidates. By letting developers demonstrate their skills in coding challenges, you can reduce technical interview time and focus only on the most qualified applicants.
+            </p>
+          </div>
+        </div>
 
-        <h4>Access the largest library of hiring content in the world</h4>
-        <p>
-          Skip the hassle of building tests from scratch and use a pre-built Certified Assessment or dive into the library of hands-on questions. Covering tech's most in-demand roles and skills, across all levels, HackerRank has the largest library of developer hiring content in the world.
-        </p>
+        <div style={styles.candidateItem}>
+          <img src="https://via.placeholder.com/150" alt="Library of Hiring Content" style={styles.candidateImage} />
+          <div style={styles.textContent}>
+            <h4>Access the largest library of hiring content in the world</h4>
+            <p>
+              Skip the hassle of building tests from scratch and use a pre-built Certified Assessment or dive into the library of hands-on questions. Covering tech's most in-demand roles and skills, across all levels, HackerRank has the largest library of developer hiring content in the world.
+            </p>
+          </div>
+        </div>
 
-        <h4>University hiring and early talent screening built to scale</h4>
-        <p>
-          When hiring turns high volume, our approach helps applicants show off their skills. Think developer-approved prep materials, coding challenges, and screening that scales with you. This solution ensures efficient hiring even when dealing with large volumes of applicants.
-        </p>
+        <div style={styles.candidateItem}>
+          <img src="https://via.placeholder.com/150" alt="University Hiring" style={styles.candidateImage} />
+          <div style={styles.textContent}>
+            <h4>University hiring and early talent screening built to scale</h4>
+            <p>
+              When hiring turns high volume, our approach helps applicants show off their skills. Think developer-approved prep materials, coding challenges, and screening that scales with you. This solution ensures efficient hiring even when dealing with large volumes of applicants.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Footer section */}
@@ -138,6 +164,7 @@ const HomePage = () => {
   );
 };
 
+// CSS styles for layout
 const styles = {
   page: {
     minHeight: '100vh',
@@ -157,8 +184,6 @@ const styles = {
     margin: '50px auto',
     textAlign: 'center',
     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',
-    transform: 'scale(1.02)',
-    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
   },
   mainContent: {
     marginTop: '30px',
@@ -196,6 +221,23 @@ const styles = {
     backgroundColor: '#f3f4f6',
     borderRadius: '15px',
     boxShadow: '0 5px 10px rgba(0, 0, 0, 0.1)',
+    textAlign:'center',
+  },
+  candidateItem: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '30px',
+    textAlign: 'left',
+  },
+  candidateImage: {
+    width: '150px',
+    height: '150px',
+    objectFit: 'cover',
+    borderRadius: '10px',
+    marginRight: '20px',
+  },
+  textContent: {
+    maxWidth: '600px',
   },
   footer: {
     backgroundColor: '#FFFFFF',
@@ -220,34 +262,24 @@ const styles = {
     color: '#333',
   },
   socialMediaSection: {
-    textAlign: 'center',
-    marginTop: '20px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   socialIcons: {
     display: 'flex',
     justifyContent: 'center',
-    gap: '20px',
-    marginTop: '15px',
+    gap: '15px',
   },
   iconLink: {
     display: 'inline-block',
   },
   icon: {
-    width: '40px',
-    height: '40px',
+    width: '30px',
+    height: '30px',
     objectFit: 'contain',
   },
 };
-
-// Insert keyframes manually
-const styleSheet = document.styleSheets[0];
-const keyframes = `
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-`;
-styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
 
 export default HomePage;
