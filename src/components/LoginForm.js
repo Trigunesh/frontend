@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     emailOrPhone: '',
     password: '',
   });
-
-  const navigate = useNavigate();  // Hook to navigate programmatically
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,9 +28,7 @@ const Login = () => {
       const result = await response.json();
       if (result.success) {
         toast.success('Login successful');
-        
-        // Redirect to the homepage upon successful login
-        navigate('/home');  // You can replace '/home' with your actual homepage route
+        navigate('/cards'); // After login, redirect to cards page
       } else {
         toast.error(result.message || 'Login failed');
       }
@@ -41,9 +38,9 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+    <div style={styles.container}>
+      <h2 style={styles.heading}>Login</h2>
+      <form style={styles.form} onSubmit={handleSubmit}>
         <input
           type="text"
           name="emailOrPhone"
@@ -51,6 +48,7 @@ const Login = () => {
           value={formData.emailOrPhone}
           onChange={handleChange}
           required
+          style={styles.input}
         />
         <input
           type="password"
@@ -59,11 +57,58 @@ const Login = () => {
           value={formData.password}
           onChange={handleChange}
           required
+          style={styles.input}
         />
-        <button type="submit">Login</button>
+        <button type="submit" style={styles.button}>
+          Login
+        </button>
       </form>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    minHeight: '100vh',
+    backgroundColor: '#f8f9fa',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
+  },
+  heading: {
+    fontSize: '28px',
+    marginBottom: '20px',
+    color: '#333',
+  },
+  form: {
+    width: '100%',
+    maxWidth: '400px',
+    backgroundColor: '#fff',
+    padding: '30px',
+    borderRadius: '8px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  input: {
+    padding: '12px',
+    margin: '10px 0',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+    fontSize: '16px',
+  },
+  button: {
+    marginTop: '15px',
+    backgroundColor: '#2EC4B6',
+    color: 'white',
+    padding: '12px',
+    border: 'none',
+    borderRadius: '6px',
+    fontSize: '16px',
+    cursor: 'pointer',
+  },
 };
 
 export default Login;

@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: '',
-    location: '',
-    genre: '',
-    experience: '',
-    address: '',
     email: '',
     phone: '',
     password: '',
-    confirmPassword: '',  // Added confirmPassword field
+    confirmPassword: '',
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,19 +19,8 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation for email and password
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      toast.error('Please enter a valid email');
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      toast.error('Password should be at least 6 characters long');
-      return;
-    }
-
     if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -51,10 +33,10 @@ const SignUp = () => {
 
       const result = await response.json();
       if (result.success) {
-        toast.success('Registration successful');
-        navigate('/login');
+        toast.success('Sign Up successful');
+        // Redirect or navigate to login page after successful sign up
       } else {
-        toast.error(result.message || 'Error during registration');
+        toast.error(result.message || 'Sign Up failed');
       }
     } catch (err) {
       toast.error('Error: ' + err.message);
@@ -62,22 +44,90 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
-        <input type="text" name="location" placeholder="Location" value={formData.location} onChange={handleChange} required />
-        <input type="text" name="genre" placeholder="Genre" value={formData.genre} onChange={handleChange} required />
-        <input type="number" name="experience" placeholder="Experience (years)" value={formData.experience} onChange={handleChange} required />
-        <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-        <input type="text" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-        <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} required />
-        <button type="submit">Sign Up</button>
+    <div style={styles.container}>
+      <h1>Create an Account</h1>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
+        <button type="submit" style={styles.button}>Sign Up</button>
       </form>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    width: '100%',
+    maxWidth: '400px',
+    margin: '50px auto',
+    padding: '20px',
+    backgroundColor: '#fff',
+    borderRadius: '8px',
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  input: {
+    marginBottom: '15px',
+    padding: '10px',
+    border: '1px solid #ddd',
+    borderRadius: '5px',
+    fontSize: '14px',
+  },
+  button: {
+    padding: '12px 0',
+    backgroundColor: '#2EC4B6',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
+    fontSize: '16px',
+    cursor: 'pointer',
+  },
 };
 
 export default SignUp;

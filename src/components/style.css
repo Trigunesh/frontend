@@ -1,0 +1,35 @@
+/* styles.css or CardList.jsx */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .card {
+    flex: 1 1 calc(33.33% - 20px); /* 3 cards per row */
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      flex: 1 1 calc(50% - 20px);  /* 2 cards per row on mobile */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .card {
+      flex: 1 1 100%;  /* 1 card per row on very small screens */
+    }
+  }
+  
