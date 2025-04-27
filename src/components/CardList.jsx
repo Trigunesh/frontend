@@ -1,97 +1,71 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const CardList = ({ cards }) => {
-  const navigate = useNavigate();
-
-  const redirectToHome = () => {
-    navigate('/home');
-  };
+const CardsPage = () => {
+  const dummyCards = [
+    { name: "John Doe", place: "New York", genre: "Rock" },
+    { name: "Jane Smith", place: "California", genre: "Pop" },
+    { name: "Alice Johnson", place: "Texas", genre: "Jazz" },
+    { name: "Bob Brown", place: "Florida", genre: "Classical" }
+  ];
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>Card List</h2>
-
-      <div style={styles.cardContainer}>
-        {cards && cards.length > 0 ? (
-          cards.map((card, index) => (
+    <div style={styles.page}>
+      <div style={styles.container}>
+        <h2>Our Artists</h2>
+        <div style={styles.cardsGrid}>
+          {dummyCards.map((card, index) => (
             <div key={index} style={styles.card}>
-              <img src={card.photo} alt={card.name} style={styles.image} />
-              <h3 style={styles.title}>{card.name}</h3>
-              <p style={styles.text}>{card.genre}</p>
-              <p style={styles.text}>{card.place}</p>
+              <h4>{card.name}</h4>
+              <p>Place: {card.place}</p>
+              <p>Genre: {card.genre}</p>
             </div>
-          ))
-        ) : (
-          <p style={styles.text}>No cards available.</p>
-        )}
+          ))}
+        </div>
       </div>
-
-      <button style={styles.button} onClick={redirectToHome}>
-        Go to Homepage
-      </button>
     </div>
   );
 };
 
 const styles = {
-  container: {
+  page: {
     minHeight: '100vh',
-    padding: '40px 20px',
-    backgroundColor: '#f8f9fa',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    padding: '20px',
+    background: 'linear-gradient(-45deg, #2EC4B6, #FF6B6B, #FFD93D, #6A0572)',
+    backgroundSize: '400% 400%',
+    animation: 'gradientMove 15s ease infinite',
   },
-  heading: {
-    marginBottom: '20px',
-    fontSize: '28px',
-    fontWeight: '600',
-    color: '#333',
-  },
-  cardContainer: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '20px',
-    width: '100%',
+  container: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    padding: '30px',
+    borderRadius: '10px',
     maxWidth: '1000px',
-    marginBottom: '30px',
+    margin: 'auto',
+    boxShadow: '0 8px 16px rgba(0,0,0,0.3)'
+  },
+  cardsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '20px',
+    marginTop: '20px'
   },
   card: {
     backgroundColor: '#ffffff',
     padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    borderRadius: '10px',
     textAlign: 'center',
-  },
-  image: {
-    width: '100%',
-    height: '150px',
-    objectFit: 'cover',
-    marginBottom: '15px',
-    borderRadius: '4px',
-  },
-  title: {
-    fontSize: '20px',
-    fontWeight: '500',
-    color: '#222',
-    marginBottom: '8px',
-  },
-  text: {
-    fontSize: '14px',
-    color: '#555',
-    margin: '4px 0',
-  },
-  button: {
-    backgroundColor: '#2EC4B6',
-    color: 'white',
-    padding: '12px 24px',
-    border: 'none',
-    borderRadius: '6px',
-    fontSize: '16px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
-  },
+    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+  }
 };
 
-export default CardList;
+// Insert keyframes manually
+const styleSheet = document.styleSheets[0];
+const keyframes = `
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+`;
+styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+
+export default CardsPage;

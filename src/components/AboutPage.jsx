@@ -1,21 +1,50 @@
-// AboutPage.jsx
 import React from 'react';
 
-const AboutPage = () => {
+const AboutUsPage = () => {
   return (
-    <div style={styles.container}>
-      <h1>About Us</h1>
-      <p>This is the About page where you can describe your application or company.</p>
+    <div style={styles.page}>
+      <div style={styles.container}>
+        <h2>About Us</h2>
+        <p>
+          Welcome to MERN App! We are passionate about connecting artists from all around the world.
+          Our platform is designed to help musicians, painters, and creative minds showcase their talent and collaborate.
+          Whether you're a beginner or a professional, MERN App has a place for you!
+        </p>
+      </div>
     </div>
   );
 };
 
 const styles = {
-  container: {
+  page: {
+    minHeight: '100vh',
     padding: '20px',
-    fontFamily: 'Arial, sans-serif',
-    textAlign: 'center',
+    background: 'linear-gradient(-45deg, #2EC4B6, #FF6B6B, #FFD93D, #6A0572)',
+    backgroundSize: '400% 400%',
+    animation: 'gradientMove 15s ease infinite',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  container: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    padding: '30px',
+    borderRadius: '10px',
+    maxWidth: '800px',
+    textAlign: 'center',
+    boxShadow: '0 8px 16px rgba(0,0,0,0.3)'
+  }
 };
 
-export default AboutPage;
+// Insert keyframes manually
+const styleSheet = document.styleSheets[0];
+const keyframes = `
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+`;
+styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+
+export default AboutUsPage;
